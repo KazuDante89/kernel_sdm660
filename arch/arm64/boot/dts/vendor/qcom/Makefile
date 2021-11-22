@@ -232,7 +232,11 @@ sdm660-mtp-lavender-overlay.dtbo-base := sdm660-mtp-lavender.dtb
 else
 dtb-$(CONFIG_MACH_XIAOMI_LAVENDER) := sdm660-mtp-lavender.dtb
 dtb-$(CONFIG_MACH_XIAOMI_JASON) := sdm660-mtp-jason.dtb
+ifdef CONFIG_DRM_MSM
+dtb-$(CONFIG_MACH_XIAOMI_TULIP) := sdm636-mtp-sde.dtb
+else
 dtb-$(CONFIG_MACH_XIAOMI_TULIP) := sdm636-mtp-tulip.dtb
+endif
 dtb-$(CONFIG_MACH_XIAOMI_WAYNE) := sdm660-mtp-wayne.dtb sdm660-mtp-jasmine.dtb
 dtb-$(CONFIG_MACH_XIAOMI_WHYRED) := sdm636-mtp-whyred.dtb
 endif

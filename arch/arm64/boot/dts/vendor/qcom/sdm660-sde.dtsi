@@ -304,8 +304,8 @@
 		compatible = "qcom,dsi-ctrl-hw-v2.0";
 		label = "dsi-ctrl-0";
 		cell-index = <0>;
-		reg =   <0xc994000 0x400>,
-			<0xc828000 0xac>;
+		reg = <0xc994000 0x400>,
+			  <0xc828000 0xac>;
 		reg-names = "dsi_ctrl", "mmss_misc";
 
 		gdsc-supply = <&gdsc_mdss>;
@@ -378,6 +378,84 @@
 		};
 	};
 
+	mdss_dsi1: qcom,mdss_dsi_ctrl1@c996000 {
+		compatible = "qcom,dsi-ctrl-hw-v2.0";
+		label = "dsi-ctrl-1";
+		cell-index = <1>;
+		reg = <0xc996000 0x400>,
+			  <0xc828000 0xac>;
+		reg-names = "dsi_ctrl", "mmss_misc";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm660_l1>;
+		vcca-supply = <&pm660l_l1>;
+
+		clocks = <&clock_mmss MMSS_MDSS_MDP_CLK>,
+			 <&clock_mmss MMSS_MDSS_AHB_CLK>,
+			 <&clock_mmss MMSS_MISC_AHB_CLK>,
+			 <&clock_mmss MMSS_MDSS_AXI_CLK>,
+			 <&clock_mmss MMSS_MDSS_BYTE1_CLK>,
+			 <&clock_mmss MMSS_MDSS_PCLK1_CLK>,
+			 <&clock_mmss MMSS_MDSS_ESC1_CLK>,
+			 <&clock_mmss BYTE1_CLK_SRC>,
+			 <&clock_mmss PCLK1_CLK_SRC>,
+			 <&clock_mmss MMSS_MDSS_BYTE1_INTF_CLK>;
+
+		clock-names = "mdp_core_clk", "iface_clk",
+			"core_mmss_clk", "bus_clk",
+			"byte_clk", "pixel_clk", "esc_clk",
+			"byte_clk_rcg", "pixel_clk_rcg",
+			"byte_intf_clk";
+
+		/* axi bus scale settings */
+		qcom,msm-bus,name = "mdss_dsi1";
+		qcom,msm-bus,num-cases = <2>;
+		qcom,msm-bus,num-paths = <1>;
+		qcom,msm-bus,vectors-KBps =
+			<22 512 0 0>,
+			<22 512 0 1000>;
+
+		interrupt-parent = <&mdss_mdp>;
+		interrupts = <4 0>;
+		qcom,null-insertion-enabled;
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,ctrl-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,ctrl-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <1200000>;
+				qcom,supply-max-voltage = <1250000>;
+				qcom,supply-enable-load = <12560>;
+				qcom,supply-disable-load = <4>;
+			};
+
+			qcom,phy-supply-entry@1 {
+				reg = <1>;
+				qcom,supply-name = "vcca";
+				qcom,supply-min-voltage = <880000>;
+				qcom,supply-max-voltage = <925000>;
+				qcom,supply-enable-load = <73400>;
+				qcom,supply-disable-load = <32>;
+			};
+		};
+	};
+
 	mdss_dsi_phy0: qcom,mdss_dsi_phy0@c994400 {
 		compatible = "qcom,dsi-phy-v2.0";
 		label = "dsi-phy-0";
@@ -388,18 +466,81 @@
 		gdsc-supply = <&gdsc_mdss>;
 		vdda-supply = <&pm660l_l1>;
 
-		qcom,platform-strength-ctrl = [ff 06
+		qcom,platform-strength-ctrl = [
 						ff 06
 						ff 06
 						ff 06
-						ff 00];
-		qcom,platform-regulator-settings = [1d
-						1d 1d 1d 1d];
-		qcom,platform-lane-config = [00 00 10 0f
+						ff 06
+						ff 00
+		];
+		qcom,platform-regulator-settings = [
+						1d 1d 1d 1d 1d
+		];
+		qcom,platform-lane-config = [
 						00 00 10 0f
 						00 00 10 0f
 						00 00 10 0f
-						00 00 10 8f];
+						00 00 10 0f
+						00 00 10 8f
+		];
+		qcom,panel-allow-phy-poweroff;
+
+		qcom,core-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,core-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "gdsc";
+				qcom,supply-min-voltage = <0>;
+				qcom,supply-max-voltage = <0>;
+				qcom,supply-enable-load = <0>;
+				qcom,supply-disable-load = <0>;
+			};
+		};
+
+		qcom,phy-supply-entries {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			qcom,phy-supply-entry@0 {
+				reg = <0>;
+				qcom,supply-name = "vdda";
+				qcom,supply-min-voltage = <880000>;
+				qcom,supply-max-voltage = <925000>;
+				qcom,supply-enable-load = <73400>;
+				qcom,supply-disable-load = <32>;
+			};
+		};
+	};
+
+	mdss_dsi_phy1: qcom,mdss_dsi_phy1@c996400 {
+		compatible = "qcom,dsi-phy-v2.0";
+		label = "dsi-phy-1";
+		cell-index = <1>;
+		reg = <0xc996400 0x588>, <0xc996200 0x98>, <0xc901400 0x100>;
+		reg-names = "dsi_phy", "dyn_refresh_base", "phy_clamp_base";
+
+		gdsc-supply = <&gdsc_mdss>;
+		vdda-supply = <&pm660l_l1>;
+
+		qcom,platform-strength-ctrl = [
+						ff 06
+						ff 06
+						ff 06
+						ff 06
+						ff 00
+		];
+		qcom,platform-regulator-settings = [
+						1d 1d 1d 1d 1d
+		];
+		qcom,platform-lane-config = [
+						00 00 10 0f
+						00 00 10 0f
+						00 00 10 0f
+						00 00 10 0f
+						00 00 10 8f
+		];
 		qcom,panel-allow-phy-poweroff;
 
 		qcom,core-supply-entries {

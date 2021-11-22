@@ -14,3 +14,4 @@
 
 #include "sdm660-sde.dtsi"
 #include "sdm660-sde-pll.dtsi"
+#include "sdm660-sde-panel.dtsi"
