@@ -53,6 +53,8 @@
         /* MP */
         novatek,mp-support-dt;
 
+        panel = <&dsi-panel-boe-td4320-1080p-video>;
+
         /* for Xiaomi F7A Tianma NVT36672A module TM6.30" */
         novatek-mp-criteria-5911@0 {
 
