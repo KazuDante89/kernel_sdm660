@@ -11,9 +11,9 @@
 #include <linux/sched/sysctl.h>
 #include <linux/sched/core_ctl.h>
 
-#define MAX_NR_CLUSTERS			3
+#define MAX_NR_CLUSTERS			2
 
-#ifdef CONFIG_HZ_300
+#ifdef CONFIG_HZ_100
 /*
  * Tick interval becomes to 3333333 due to
  * rounding error when HZ=300.
