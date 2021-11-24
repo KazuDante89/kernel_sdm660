@@ -31,7 +31,7 @@
 
 	chosen {
 		stdout-path = "serial0";
-		bootargs = "noirqdebug nodebugmon rcu_nocbs=0-7";
+		bootargs = "noirqdebug nodebugmon rcu_nocbs=0-7 kpti=off";
 	};
 
 	psci {
@@ -52,6 +52,7 @@
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			efficiency = <1024>;
+			freq-energy-model;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L2_0: l2-cache {
@@ -86,6 +87,7 @@
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			#cooling-cells = <2>;
 			efficiency = <1024>;
+			freq-energy-model;
 			next-level-cache = <&L2_0>;
 			L1_I_1: l1-icache {
 				compatible = "arm,arch-cache";
@@ -109,6 +111,7 @@
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			efficiency = <1024>;
+			freq-energy-model;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L1_I_2: l1-icache {
@@ -133,6 +136,7 @@
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			efficiency = <1024>;
+			freq-energy-model;
 			next-level-cache = <&L2_0>;
 			#cooling-cells = <2>;
 			L1_I_3: l1-icache {
@@ -157,6 +161,7 @@
 			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			efficiency = <1638>;
+			freq-energy-model;
 			next-level-cache = <&L2_1>;
 			#cooling-cells = <2>;
 			L2_1: l2-cache {
@@ -186,6 +191,7 @@
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
 			efficiency = <1638>;
+			freq-energy-model;
 			next-level-cache = <&L2_1>;
 			L1_I_101: l1-icache {
 				compatible = "arm,arch-cache";
@@ -210,6 +216,7 @@
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
 			efficiency = <1638>;
+			freq-energy-model;
 			next-level-cache = <&L2_1>;
 			L1_I_102: l1-icache {
 				compatible = "arm,arch-cache";
@@ -234,6 +241,7 @@
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			#cooling-cells = <2>;
 			efficiency = <1638>;
+			freq-energy-model;
 			next-level-cache = <&L2_1>;
 			L1_I_103: l1-icache {
 				compatible = "arm,arch-cache";
@@ -297,7 +305,6 @@
 				1113600	83
 				1401600	146
 				1536000	158
-				1612800 170
 				1747200	228
 				1843200	285
 			>;
@@ -311,11 +318,9 @@
 				1113600	307
 				1401600	485
 				1747200	857
-				1804800	944
 				1958400	1222
 				2150400	1592
 				2208000	1632
-				2457600	2080
 			>;
 			idle-cost-data = <
 				100 80 60 40
@@ -329,7 +334,6 @@
 				1113600	7
 				1401600	9
 				1536000	9
-				1612800 10
 				1747200	11
 				1843200	13
 			>;
@@ -343,11 +347,9 @@
 				1113600	14
 				1401600	17
 				1747200	25
-				1804800	27
 				1958400	31
 				2150400	37
 				2208000	44
-				2457600	45
 			>;
 			idle-cost-data = <
 				4 3 2 1
@@ -1318,7 +1320,7 @@
 				< 1113600 MHZ_TO_MBPS(200, 4) >,
 				< 1401600 MHZ_TO_MBPS(1017, 4) >,
 				< 2150400 MHZ_TO_MBPS(1555, 4) >,
-				< 2457600 MHZ_TO_MBPS(1804, 4) >;
+				< 2208000 MHZ_TO_MBPS(1804, 4) >;
 		};
 
 		cpu4_computemon: qcom,cpu4-computemon {
@@ -1330,7 +1332,7 @@
 				< 1401600 MHZ_TO_MBPS(547, 4) >,
 				< 1747200 MHZ_TO_MBPS(768, 4) >,
 				< 2150400 MHZ_TO_MBPS(1017, 4) >,
-				< 2457600 MHZ_TO_MBPS(1804, 4) >;
+				< 2208000 MHZ_TO_MBPS(1804, 4) >;
 		};
 	};
 
@@ -1483,8 +1485,7 @@
 			< 1747200 >,
 			< 1958400 >,
 			< 2150400 >,
-			< 2208000 >,
-			< 2457600 >;
+			< 2208000 >;
 	};
 
 	sdhc_1: sdhci@c0c4000 {
