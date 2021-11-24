@@ -60,7 +60,7 @@ function compile() {
 # Zipping
 function zipping() {
     cd AnyKernel || exit 1
-    zip -r9 [4.19]-Impact_v.0.0.zip *
+    zip -r9 [4.19]-Impact_v.0.1.zip *
     cd ..
 }
 sendinfo
